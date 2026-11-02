@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123e70">
+<title>نظام تقييم السباحين</title>
+<style>
+:root{--navy:#123e70;--blue:#1687c9;--green:#14966e;--gold:#f1a21b;--red:#d92735;--ink:#18334d;--muted:#6b7f91;--line:#dbe5ee;--bg:#eef3f8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:var(--ink)}
+header{background:linear-gradient(120deg,#10335d,#1b6097);color:white;padding:18px 20px}
+.head{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:#ffffff20;display:grid;place-items:center;font-size:25px}
+h1{font-size:clamp(18px,3vw,25px);margin:0 0 5px}.subtitle{font-size:12px;opacity:.85}.header-actions{display:flex;gap:8px;flex-wrap:wrap}
+button,.button{font:inherit;border:0;border-radius:9px;padding:10px 13px;cursor:pointer;font-weight:bold}.primary{background:#0b9c76;color:#fff}.white{background:#fff;color:var(--navy)}.soft{background:#eaf2fb;color:var(--navy)}.danger{background:#fff0f0;color:#b91c1c}
+main{max-width:1200px;margin:18px auto;padding:0 14px}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:14px;box-shadow:0 3px 14px #163d5a08}
+.section-title{font-size:15px;font-weight:bold;margin:0 0 12px;color:var(--navy)}.fields{display:grid;grid-template-columns:2fr 1.2fr 1fr 1fr 1fr;gap:10px}
+label{font-size:12px;font-weight:bold;color:#50677b;display:block;margin-bottom:5px}input,select,textarea{width:100%;padding:10px;border:1px solid #cfdae5;border-radius:8px;background:white;font:inherit;color:var(--ink);min-width:0}input[type="checkbox"]{width:17px;height:17px;accent-color:var(--green);cursor:pointer}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 14px}.tab{background:#e4edf6;color:#254a6c;padding:9px 13px;border-radius:9px;font-size:13px}.tab.active{background:var(--navy);color:white}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#f3f8fc;border:1px solid var(--line);border-radius:10px;padding:11px}.stat small{color:var(--muted);display:block;font-size:11px}.stat strong{font-size:20px;color:var(--navy);display:block;margin-top:4px}
+.progress{height:8px;background:#e6edf4;border-radius:99px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:linear-gradient(90deg,#08a77c,#6acb95);width:0%;transition:width .2s}
+.levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.level{border:1px solid var(--line);border-radius:12px;overflow:hidden;break-inside:avoid}.level-head{padding:10px 12px;color:white;display:flex;justify-content:space-between;align-items:center;gap:8px}.level-head h3{font-size:14px;margin:0}.level-head small{font-size:11px}.skill{display:grid;grid-template-columns:minmax(0,1fr) 90px 90px;gap:7px;align-items:center;padding:8px 10px;border-top:1px solid #e8eef3;font-size:12px;line-height:1.45}.skill:nth-child(even){background:#f8fbfd}.skill .choice{display:flex;align-items:center;justify-content:center;gap:4px;font-size:11px;color:#52697e;white-space:nowrap}.skill .choice.ok{color:#087e5d}.skill .choice.need{color:#b4232d}
+.notes-area{margin-top:12px}.footer{display:grid;grid-template-columns:2fr 1fr;gap:12px;background:var(--navy);color:white;padding:13px;border-radius:10px;margin-top:14px;font-size:12px}.footer textarea{margin-top:7px;min-height:60px}.footer input{margin-top:8px}
+.records{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.records select{max-width:400px}.hint{font-size:11px;color:var(--muted);margin-top:8px}
+@media(max-width:760px){.head{align-items:flex-start;flex-direction:column}.fields{grid-template-columns:1fr 1fr}.levels{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.skill{grid-template-columns:minmax(0,1fr) 78px 78px;padding:7px}.header-actions button{padding:9px}}
+@media print{
+ @page{size:A4 landscape;margin:5mm}
+ body{background:white;color:#111;font-size:9px}.no-print,header .header-actions,.tabs,.hint,.records,.panel.controls{display:none!important}
+ header{padding:6px 10px;background:#123e70!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .head{max-width:none}.logo{width:30px;height:30px}.subtitle{font-size:9px}
+ main{max-width:none;margin:5px 0;padding:0}.panel{box-shadow:none;border:0;padding:5px;margin:0 0 4px}
+ .fields{grid-template-columns:2fr 1.2fr 1fr 1fr 1fr;gap:5px}.fields input{padding:4px}
+ .stats{grid-template-columns:repeat(3,1fr);gap:5px}.stat{padding:4px}.stat strong{font-size:12px}.progress{height:4px}
+ .levels{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.level{border-radius:0}
+ .level-head{padding:4px 6px!important;print-color-adjust:exact;-webkit-print-color-adjust:exact}.level-head h3{font-size:10px}
+ .skill{grid-template-columns:minmax(0,1fr) 48px 48px;gap:2px;padding:2px 4px;font-size:7.4px;line-height:1.18}
+ .skill input{width:10px;height:10px}.skill .choice{font-size:7px}
+ .footer{margin-top:5px;padding:5px;grid-template-columns:2fr 1fr;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+ .footer textarea{min-height:25px;padding:3px;font-size:8px}.footer input{padding:3px;font-size:8px}
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="head">
+  <div class="brand"><div class="logo">🏊</div><div><h1 id="academyTitle">أكاديمية السباحة | تقييم المهارات</h1><div class="subtitle">نظام متابعة وإتقان المستويات — Swim Better… Grow Stronger</div></div></div>
+  <div class="header-actions no-print"><button class="white" onclick="window.print()">🖨️ طباعة / PDF</button><button class="primary" onclick="saveRecord()">💾 حفظ التقييم</button></div>
+ </div>
+</header>
+<main>
+ <section class="panel controls no-print">
+  <h2 class="section-title">إعدادات الأكاديمية والملف</h2>
+  <div class="fields">
+   <div><label>اسم الأكاديمية</label><input id="academy" placeholder="اسم الأكاديمية" value="أكاديمية السباحة" oninput="document.getElementById('academyTitle').textContent=this.value+' | تقييم المهارات'"></div>
+   <div><label>اسم السباح</label><input id="swimmer" placeholder="اسم السباح"></div>
+   <div><label>كود السباح</label><input id="swimmerCode" placeholder="مثال: SW-001"></div>
+   <div><label>العمر</label><input id="age" type="number" min="1" placeholder="العمر"></div>
+   <div><label>اسم المدرب</label><input id="coach" placeholder="اسم المدرب"></div>
+  </div>
+  <div style="margin-top:10px;display:flex;gap:10px;align-items:end;flex-wrap:wrap">
+   <div><label>تاريخ التقييم</label><input id="date" type="date"></div>
+   <div class="records">
+    <div><label for="recordSearch">البحث عن تقييم بالاسم أو الكود</label><input id="recordSearch" type="search" placeholder="اكتب اسم السباح أو الكود..." oninput="refreshRecords($('savedRecords').value)" style="min-width:220px"></div>
+    <div><label>التقييمات المحفوظة على هذا الجهاز</label><select id="savedRecords"><option value="">اختر تقييمًا محفوظًا</option></select></div>
+    <button class="soft" onclick="loadRecord()">فتح</button><button class="danger" onclick="deleteRecord()">حذف</button><button class="soft" onclick="newRecord()">تقييم جديد</button>
+   </div>
+  </div>
+  <div class="hint">تُحفظ السجلات محليًا على نفس الجهاز والمتصفح. لا يتم إرسال بيانات السباح إلى الإنترنت.</div>
+ </section>
+ <section class="panel">
+  <h2 class="section-title">ملخص التقييم</h2>
+  <div class="stats">
+   <div class="stat"><small>نسبة إتقان المهارات المحددة</small><strong id="overall">0%</strong><div class="progress"><span id="overallBar"></span></div></div>
+   <div class="stat"><small>المستوى الحالي المقترح</small><strong id="currentLevel">لم يحدد</strong></div>
+   <div class="stat"><small>عدد المهارات المقبولة</small><strong id="accepted">0</strong></div>
+  </div>
+  <div class="tabs no-print" id="tabs"></div>
+  <div id="levelView" class="levels"></div>
+  <div class="hint no-print">اختر «مقبول» عند إتقان المهارة، أو «يحتاج تدريب» لتحديد المهارات التي تحتاج إلى متابعة. النسب تُحسب تلقائيًا.</div>
+ </section>
+ <section class="footer">
+  <div><strong>ملاحظات المدرب</strong><textarea id="notes" placeholder="اكتب الملاحظات وخطة التدريب المقترحة..."></textarea></div>
+  <div><strong>توقيع المدرب</strong><input id="signature" placeholder="اسم المدرب / التوقيع"><br><br><strong>النتيجة النهائية</strong><div style="margin-top:8px">☐ اجتاز المستوى &nbsp;&nbsp; ☐ يحتاج تدريبًا إضافيًا</div></div>
+ </section>
+ <div class="note" style="text-align:center;color:#46627b;font-size:12px;margin:10px">Swim Better… Grow Stronger…</div>
+</main>
+<script>
+const levelData=[
+["المستوى الأول","#1687c9",["بايلز ٥ مرات","فتح العينين تحت الماء","تبادل أخذ النفس والخروج بصورة منتظمة","طفو النجمة على البطن لمدة ١٠ ثوانٍ","طفو النجمة على الظهر لمدة ١٠ ثوانٍ"]],
+["المستوى الثاني","#62b52b",["الدفع والانزلاق على البطن من الحائط","الطفو على الظهر بدفع الحائط والذراعان بجانب الجسم","الطفو على الظهر والذراعان أعلى الجسم","مهارة الدوران من الطفو على البطن إلى الظهر والعكس","الوقوف في الماء لمدة ١٠ ثوانٍ"]],
+["المستوى الثالث","#f28a00",["ضربات الرجلين بدفع الحائط على البطن مع أخذ النفس للأمام لمسافة ١٠م","ضربات الرجلين بدفع الحائط على الظهر لمسافة ١٠م","ضربات رجلين على البطن مع الدوران (يمين – أمام – يسار) ٦ عدات لكل وضع","ضربات رجلين على الظهر مع الدوران على الجانبين ٦ عدات لكل جانب لمسافة ١٠م","ضربات رجلين من وضع الاستريم لاين مع الدوران إلى الظهر والعكس","مهارة الوقوف في الماء ٢٠ ثانية"]],
+["المستوى الرابع","#843fc1",["ضربات رجلين من وضع الاستريم لاين مع الدوران","مسك وشد الدفع للسباحة الحرة دون ضربات رجلين منتظمة","كاش أب للسباحة الحرة بدون نفس","ضربات رجلين على الظهر مع الدوران على الجانبين ٦ عدات لكل جانب لمسافة ١٠م","ذراع واحد لسباحة الظهر مع دوران الجسم والثبات ٣ ثوانٍ","حركة الذراعين بالتبادل في سباحة الظهر بالدوران والثبات ٣ ثوانٍ"]],
+["المستوى الخامس","#00a987",["مهارة النفس الجانبي يمين ويسار","أخذ النفس مع كاش أب كل ٢ ضربات رجلين (يمين – يسار)","سباحة حرة كل ٣ ضربات رجلين مع نفس جانبي","سباحة الظهر التبادلية","الدفع من وضع الاستريم لاين مع ضربات دولفين وسطية"]],
+["المستوى السادس","#0086a5",["٢٥ متر سباحة حرة (البداية، النهاية)","الدوران في السباحة الحرة","الدفع من وضع الاستريم لاين وضربات دولفين وسط الظهر","٢٥ متر سباحة ظهر (البداية، النهاية)","الدوران في سباحة الظهر","الدفع من وضع الاستريم لاين وضربات دولفين وسط البطن"]]
+];
+let active=0,marks={},records={};
+const $=id=>document.getElementById(id);
+$("date").value=new Date().toISOString().slice(0,10);
+function key(l,i){return l+"_"+i}
+function build(){
+ $("tabs").innerHTML=levelData.map((l,i)=>`<button class="tab ${i===active?'active':''}" onclick="active=${i};build()">${l[0]}</button>`).join("");
+ $("levelView").innerHTML=levelData.map((l,li)=>`<article class="level" ${li!==active?'style="display:none"':''}><div class="level-head" style="background:${l[1]}"><h3>${l[0]}</h3><small id="levelPct${li}">0% إتقان</small></div>${l[2].map((skill,i)=>`<div class="skill"><span>${skill}</span><label class="choice ok"><input type="checkbox" data-k="${key(li,i)}" data-v="ok" ${marks[key(li,i)]==='ok'?'checked':''} onchange="setMark(this)"> مقبول</label><label class="choice need"><input type="checkbox" data-k="${key(li,i)}" data-v="need" ${marks[key(li,i)]==='need'?'checked':''} onchange="setMark(this)"> يحتاج تدريب</label></div>`).join("")}</article>`).join("");
+ update();
+}
+function setMark(el){let k=el.dataset.k,v=el.dataset.v;if(el.checked)marks[k]=v;else delete marks[k];document.querySelectorAll(`[data-k="${k}"]`).forEach(x=>x.checked=marks[k]===x.dataset.v);update()}
+function update(){
+ let total=0,accepted=0,highest=-1;
+ levelData.forEach((l,li)=>{let count=l[2].length,ok=0;for(let i=0;i<count;i++){if(marks[key(li,i)]==='ok')ok++}total+=count;accepted+=ok;$("levelPct"+li).textContent=Math.round(ok/count*100)+"% إتقان";if(ok===count)highest=li;});
+ let pct=total?Math.round(accepted/total*100):0;$("overall").textContent=pct+"%";$("overallBar").style.width=pct+"%";$("accepted").textContent=accepted;$("currentLevel").textContent=highest>=0?levelData[highest][0]:"لم يحدد";
+}
+function values(){return {academy:$("academy").value,swimmer:$("swimmer").value,swimmerCode:$("swimmerCode").value,age:$("age").value,coach:$("coach").value,date:$("date").value,notes:$("notes").value,signature:$("signature").value,marks:{...marks}}}
+function restore(d){["academy","swimmer","swimmerCode","age","coach","date","notes","signature"].forEach(k=>$(k).value=d[k]||"");$("academyTitle").textContent=($("academy").value||"أكاديمية السباحة")+" | تقييم المهارات";marks=d.marks||{};build()}
+function getRecords(){try{return JSON.parse(localStorage.getItem("swimAssessmentRecords")||"{}")}catch(e){return {}}}
+function saveRecord(){let d=values();if(!d.swimmer.trim()){alert("يرجى إدخال اسم السباح أولًا.");$("swimmer").focus();return}records=getRecords();let id=$("savedRecords").value||Date.now().toString();records[id]=d;localStorage.setItem("swimAssessmentRecords",JSON.stringify(records));refreshRecords(id);alert("تم حفظ التقييم على هذا الجهاز.");}
+function refreshRecords(selected=""){
+ records=getRecords();
+ const query=($("recordSearch")?.value||"").trim().toLocaleLowerCase("ar");
+ const filtered=Object.entries(records).filter(([id,d])=>{
+  const name=String(d.swimmer||"").toLocaleLowerCase("ar");
+  const code=String(d.swimmerCode||"").toLocaleLowerCase("ar");
+  return !query||name.includes(query)||code.includes(query);
+ });
+ $("savedRecords").innerHTML='<option value="">اختر تقييمًا محفوظًا</option>'+filtered.map(([id,d])=>`<option value="${id}">${d.swimmer||"سباح"}${d.swimmerCode?" ("+d.swimmerCode+")":""} — ${d.date||""}</option>`).join("");
+ $("savedRecords").value=filtered.some(([id])=>id===selected)?selected:"";
+}
+function loadRecord(){let id=$("savedRecords").value;if(!id||!records[id]){alert("اختر تقييمًا محفوظًا.");return}restore(records[id])}
+function deleteRecord(){let id=$("savedRecords").value;if(!id||!records[id]){alert("اختر تقييمًا لحذفه.");return}if(confirm("هل تريد حذف هذا التقييم؟")){delete records[id];localStorage.setItem("swimAssessmentRecords",JSON.stringify(records));refreshRecords();newRecord(false)}}
+function newRecord(ask=true){if(ask&&!confirm("بدء تقييم جديد؟ تأكد من حفظ التقييم الحالي."))return;restore({academy:"أكاديمية السباحة",date:new Date().toISOString().slice(0,10),marks:{}});refreshRecords()}
+refreshRecords();build();
+</script>
+</body>
+</html>
